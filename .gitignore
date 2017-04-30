@@ -1,3 +1,7 @@
+/target
+.idea
+*.iml
+
 # Compiled Lua sources
 luac.out
 
