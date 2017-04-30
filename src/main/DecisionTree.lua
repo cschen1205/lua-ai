@@ -6,7 +6,7 @@ function DecisionTree.create(scriptPath, _cls)
 	setmetatable(tree, DecisionTree);
 	
 	tree.scriptPath=scriptPath;
-	local treeNodeFactory=dofile(scriptPath .. "\\TreeNode.lua");
+	local treeNodeFactory=dofile(scriptPath .. "/TreeNode.lua");
 	tree.root=treeNodeFactory.create(_cls);
 	tree.trained=false;
 	
@@ -40,7 +40,7 @@ function DecisionTree:load(fileName)
 end
 
 function DecisionTree:save(filename)
-	--local logger=dofile(getDefaultScriptPath() .. "\\Logger.lua");
+	--local logger=dofile(getDefaultScriptPath() .. "/Logger.lua");
 	--logger.create(filename);
 	--self.root:save("", filename);
 	--logger.close();
@@ -55,7 +55,7 @@ function DecisionTree:toString()
 end
 
 function DecisionTree:printXML(fileName)
-	local logger=dofile(getDefaultScriptPath() .. "\\Logger.lua");
+	local logger=dofile(getDefaultScriptPath() .. "/Logger.lua");
 	logger.create(fileName);
 	logger.println("<?xml version=\"1.0\"?>");
 	self.root:toXML(logger);
@@ -63,7 +63,7 @@ function DecisionTree:printXML(fileName)
 end
 
 function DecisionTree:printPredictionTrace(record, fileName)
-	local logger=dofile(getDefaultScriptPath() .. "\\Logger.lua");
+	local logger=dofile(getDefaultScriptPath() .. "/Logger.lua");
 	logger.create(fileName);
 	logger.println("<?xml version=\"1.0\"?>");
 	self.root:printPredictionTrace(record, logger);
