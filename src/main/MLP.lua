@@ -154,7 +154,7 @@ function MLP:getLayerCount()
 end
 
 function MLP:save(fileName)
-	local logger=dofile(getDefaultScriptPath() .. "\\GameLogger.lua");
+	local logger=dofile(getDefaultScriptPath() .. "\\Logger.lua");
 	
 	logger.create(fileName);
 	logger.println("local MLP={};");
