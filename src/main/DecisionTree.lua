@@ -55,7 +55,7 @@ function DecisionTree:toString()
 end
 
 function DecisionTree:printXML(fileName)
-	local logger=dofile(getDefaultScriptPath() .. "/Logger.lua");
+	local logger=dofile(self.scriptPath .. "/Logger.lua");
 	logger.create(fileName);
 	logger.println("<?xml version=\"1.0\"?>");
 	self.root:toXML(logger);
@@ -63,7 +63,7 @@ function DecisionTree:printXML(fileName)
 end
 
 function DecisionTree:printPredictionTrace(record, fileName)
-	local logger=dofile(getDefaultScriptPath() .. "/Logger.lua");
+	local logger=dofile(self.scriptPath .. "/Logger.lua");
 	logger.create(fileName);
 	logger.println("<?xml version=\"1.0\"?>");
 	self.root:printPredictionTrace(record, logger);

@@ -1,0 +1,1 @@
+This folder is used to store test-results files from test

@@ -4,7 +4,7 @@ GameAgentFactory=dofile("GameAgent.lua");
 
 --train to obtain Saved.lua file;
 local agent=GameAgentFactory.create("UserBot");
-initializeAgent(agent, agent:getScriptClassPath() .. "/DecisionTreeBot.lua");
+initializeAgent(agent, "DecisionTreeBot.lua");
 trainAgent(agent);
 
 --test accuracy of the training

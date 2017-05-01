@@ -1,3 +1,4 @@
+/src/test/test-results/*.xml
 /target
 .idea
 *.iml

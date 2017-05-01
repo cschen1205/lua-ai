@@ -65,7 +65,7 @@ function Bot.train(agent)
 	if brain:isTrained() then
 		alert("C45 has already been trained", "Training Completed");
 	else
-		local data=dofile(scriptClassPath .. "/data.lua");
+		local data=dofile("data.lua");
 	
 		--build C45
 		local records={};
@@ -74,7 +74,7 @@ function Bot.train(agent)
 		end
 		brain:build(records);
 		
-		brain:printXML(scriptClassPath .. "/Saved.xml");
+		brain:printXML("test-results/decision-tree-saved.xml");
 		alert("Training Completed with Saved.xml generated for C45 ", "Training Completed");
 	end
 end
