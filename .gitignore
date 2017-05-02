@@ -1,4 +1,5 @@
 /src/test/test-results/*.xml
+/src/test/test-results/*.lua
 /target
 .idea
 *.iml

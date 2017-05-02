@@ -37,8 +37,8 @@ function Bot.createMLP(scriptClassPath)
 
 	brain:addLayer(5); --output layer	
 
-	if fileExists(scriptClassPath .. "\\Saved.lua") then
-		brain:load(scriptClassPath .. "\\Saved.lua");
+	if fileExists("test-results/decision-tree-saved.lua") then
+		brain:load("test-results/decision-tree-saved.lua");
 	end
 	
 	return brain;
@@ -82,7 +82,7 @@ end
 
 function Bot.train(agent)
 	local agentId=agent:getAgentId();
-	local records=dofile(agent:getScriptClassPath() .. "\\data.lua");
+	local records=dofile("data.lua");
 	
 	local brain=Bot[agentId].brain;
 	local err=0;
@@ -119,7 +119,7 @@ function Bot.train(agent)
 	brain:loadWeights();
 	
 	showConsole(false);
-	brain:save(agent:getScriptClassPath() .. "\\Saved.lua");
+	brain:save("test-results/decision-tree-saved.lua");
 	
 	Bot.training_error=err;
 	alert("Training Completed with errors " .. err, "Training Completed");
