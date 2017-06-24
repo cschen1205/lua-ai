@@ -1,0 +1,27 @@
+ip: 192.168.10.10
+synced_folder:
+    host_path: "[magento_host_path]"
+    guest_path: "/magento-dev/"
+mysql:
+    host: "127.0.0.1"
+    username: root
+    password: magento123
+http_basic:
+    repo_magento_com:
+        username: [magento_public_key]
+        password: [magento_private_key]
+github_oauth:
+    github_com: "[github_oauth]"
+magento:
+    db_name: "magento"
+    admin_firstname: "Admin"
+    admin_lastname: "Magento"
+    admin_password: "admin123"
+    admin_user: "admin"
+    admin_email: "email@change.me"
+    backend_frontname: "admin"
+    language: "en_US"
+    currency: "SGD"
+    timezone: "Asia/Singapore"
+    base_url: "http://magento.box"
+    fixture: "small"
