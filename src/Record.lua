@@ -1,41 +1,41 @@
-local Record={};
-Record.__index=Record;
+local Record={}
+Record.__index=Record
 
 function Record.create()
-	local rec={};
-	setmetatable(rec,Record);  -- make GameAgent handle lookup
+	local rec={}
+	setmetatable(rec,Record)  -- make GameAgent handle lookup
 	
-	rec.attributes={};
-	return rec;
+	rec.attributes={}
+	return rec
 end
 
 function Record:setAttribute(attrName, attrValue)
-	self.attributes[attrName]=attrValue;
+	self.attributes[attrName]=attrValue
 end
 
 function Record:getAttributeCount()
-	return (# self.attributes);
+	return (# self.attributes)
 end
 
 function Record:getAttributeValue(attrName)
-	return self.attributes[attrName];
+	return self.attributes[attrName]
 end
 
 function Record:toString()
-	local msg="";
-	local attrCount=self:getAttributeCount();
+	local msg=""
+	local attrCount=self:getAttributeCount()
 	for attrName, attrValue in next, self.attributes, nil do
 		if attrValue==true then
-			msg = msg .. attrName .. ": true";
+			msg = msg .. attrName .. ": true"
 		elseif attrValue==false then
-			msg = msg .. attrName .. ": false";
+			msg = msg .. attrName .. ": false"
 		else
-			msg = msg .. attrName .. ": " .. attrValue;
+			msg = msg .. attrName .. ": " .. attrValue
 		end
-		msg = msg .. "\n";
+		msg = msg .. "\n"
 	end
-	return msg;
+	return msg
 end
 
 
-return Record;
+return Record
