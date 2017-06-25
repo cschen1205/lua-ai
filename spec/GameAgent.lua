@@ -15,7 +15,7 @@ function GameAgent.create(agentId)
    agnt.score=0;
    agnt.armor=0;
    agnt.firingDelay=10;
-   local GameWeaponFactory=dofile(getDefaultScriptPath() .. "/GameWeapon.lua");
+   local GameWeaponFactory=require("GameWeapon");
    agnt.gun=GameWeaponFactory.create();
    
    agnt.currentTarget=nil;

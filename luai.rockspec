@@ -1,8 +1,8 @@
-package = "LuaAI"
+package = "luai"
 version = "1.0-1"
 source = {
-   url = "https://github.com/cschen1205/lua-ai",
-   tag = "v1.0",
+   url = "git://github.com/cschen1205/lua-ai.git",
+   tag = "v1.0.0",
 }
 description = {
    summary = "Lua AI Library",
