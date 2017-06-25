@@ -40,8 +40,8 @@ function Bot.createMLP(scriptClassPath)
 
 	brain:addLayer(5); --output layer	
 
-	if GameUtil.fileExists("test-results/decision-tree-saved.lua") then
-		brain:load("test-results/decision-tree-saved.lua");
+	if GameUtil.fileExists("/tmp/decision-tree-saved.lua") then
+		brain:load("/tmp/decision-tree-saved.lua");
 	end
 	
 	return brain;
@@ -122,7 +122,7 @@ function Bot.train(agent)
 	brain:loadWeights();
 	
 	GameUtil.showConsole(false);
-	brain:save("test-results/decision-tree-saved.lua");
+	brain:save("/tmp/decision-tree-saved.lua");
 	
 	Bot.training_error=err;
 	GameUtil.alert("Training Completed with errors " .. err, "Training Completed");

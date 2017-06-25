@@ -1,11 +1,16 @@
 local LogFile={};
+LogFile.__index = LogFile
+LogFile.handle = nil
 
 function LogFile.create(_filename)
 	LogFile.filename=_filename;
-	LogFile.handle=io.open(LogFile.filename, "w");
 end
 
 function LogFile.println(line)
+	print(LogFile.filename)
+	if LogFile.handle == nil then
+		LogFile.handle=io.open(LogFile.filename, "w");
+	end
 	LogFile.handle:write(line .. "\n");
 end
 
