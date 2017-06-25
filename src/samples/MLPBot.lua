@@ -1,11 +1,14 @@
 local Bot={};
 
+local GameWorld = require("samples.GameWorld")
+local GameUtil = require("samples.GameUtil")
+
 Bot.actions={};
-Bot.actions[GameAgentAction.ATTACK]=1;
-Bot.actions[GameAgentAction.IDLE]=2;
-Bot.actions[GameAgentAction.APPROACH]=3;
-Bot.actions[GameAgentAction.WANDER]=4;
-Bot.actions[GameAgentAction.ESCAPE]=5;
+Bot.actions[GameWorld.GameAgentAction.ATTACK]=1;
+Bot.actions[GameWorld.GameAgentAction.IDLE]=2;
+Bot.actions[GameWorld.GameAgentAction.APPROACH]=3;
+Bot.actions[GameWorld.GameAgentAction.WANDER]=4;
+Bot.actions[GameWorld.GameAgentAction.ESCAPE]=5;
 
 Bot.err_threshold=0.1;
 Bot.max_epoches=200;
@@ -29,7 +32,7 @@ end
 function Bot.createMLP(scriptClassPath)
 	local brain={};	
 	
-	local MLPFactory=dofile(scriptClassPath .. "\\MLP.lua");
+	local MLPFactory=require("MLP");
 	local brain=MLPFactory.create(0.3);
 	brain:addLayer(4); --input layer --Xianshun: I change it to 4...
 
@@ -37,7 +40,7 @@ function Bot.createMLP(scriptClassPath)
 
 	brain:addLayer(5); --output layer	
 
-	if fileExists("test-results/decision-tree-saved.lua") then
+	if GameUtil.fileExists("test-results/decision-tree-saved.lua") then
 		brain:load("test-results/decision-tree-saved.lua");
 	end
 	
@@ -71,23 +74,23 @@ function Bot.getOutput(entity)
 	outputs[entity:getCurrentAction()+1]=1;
 	
 	-- since the value for current action is given by
-	-- GameAgentAction.ATTACK=0;
-	-- GameAgentAction.IDLE=1;
-	-- GameAgentAction.APPROACH=2;
-	-- GameAgentAction.WANDER=3;
-	-- GameAgentAction.ESCAPE=4;
+	-- GameWorld.GameAgentAction.ATTACK=0;
+	-- GameWorld.GameAgentAction.IDLE=1;
+	-- GameWorld.GameAgentAction.APPROACH=2;
+	-- GameWorld.GameAgentAction.WANDER=3;
+	-- GameWorld.GameAgentAction.ESCAPE=4;
 		
 	return outputs;
 end
 
 function Bot.train(agent)
 	local agentId=agent:getAgentId();
-	local records=dofile("data.lua");
+	local records=require("samples.data");
 	
 	local brain=Bot[agentId].brain;
 	local err=0;
 	
-	showConsole(true);
+	GameUtil.showConsole(true);
 	
 	local minError=10000000000;
 	local stagnationCount=0;
@@ -101,8 +104,8 @@ function Bot.train(agent)
 			brain:backwardProp(outputs);
 			err=err + brain:getMSE(outputs);
 		end
-		print2Console("> epoch: " .. epoch .. " error: " .. err);
-		repaint();
+		GameUtil.print2Console("> epoch: " .. epoch .. " error: " .. err);
+		GameUtil.repaint();
 		if minError > err then
 			minError = err;
 			brain:saveWeights();
@@ -118,11 +121,11 @@ function Bot.train(agent)
 	
 	brain:loadWeights();
 	
-	showConsole(false);
+	GameUtil.showConsole(false);
 	brain:save("test-results/decision-tree-saved.lua");
 	
 	Bot.training_error=err;
-	alert("Training Completed with errors " .. err, "Training Completed");
+	GameUtil.alert("Training Completed with errors " .. err, "Training Completed");
 end
 
 function Bot.think(agent)
@@ -146,15 +149,15 @@ function Bot.think(agent)
 	end
 	firingIndex=firingIndex-1;
 	
-	if GameAgentAction.ATTACK == firingIndex then
+	if GameWorld.GameAgentAction.ATTACK == firingIndex then
 		agent:attack();
-	elseif GameAgentAction.APPROACH == firingIndex then
+	elseif GameWorld.GameAgentAction.APPROACH == firingIndex then
 		agent:approach();
-	elseif GameAgentAction.ESCAPE == firingIndex then
+	elseif GameWorld.GameAgentAction.ESCAPE == firingIndex then
 		agent:escape();
-	elseif GameAgentAction.WANDER == firingIndex then
+	elseif GameWorld.GameAgentAction.WANDER == firingIndex then
 		agent:wander();
-	elseif GameAgentAction.IDLE == firingIndex then
+	elseif GameWorld.GameAgentAction.IDLE == firingIndex then
 		agent:idle();
 	end
 end

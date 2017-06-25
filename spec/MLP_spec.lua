@@ -1,14 +1,14 @@
-dofile("GameUtil.lua");
-dofile("GameWorld.lua");
-GameAgentFactory=dofile("GameAgent.lua");
+local GameUtil = require("samples.GameUtil");
+local GameWorld = require("samples.GameWorld");
+local GameAgentFactory=require("samples.GameAgent");
 
 --train to obtain Saved.lua file;
 local agent=GameAgentFactory.create("UserBot");
-initializeAgent(agent);
-trainAgent(agent);
+GameWorld.initializeAgent(agent, "samples.MLPBot");
+GameWorld.trainAgent(agent);
 
 --test accuracy of the training
-local records=dofile("data.lua");
+local records=require("samples.data");
 
 local accuracy=0;
 for recordIndex = 1, (# records) do
@@ -20,8 +20,8 @@ for recordIndex = 1, (# records) do
 	agent:setLife(records[recordIndex]:getLife());
 	agent:setScore(records[recordIndex]:getScore());
 	
-	processAgent(agent);
-	print2Console("recorded: " .. records[recordIndex]:getCurrentAction() .. "\tpredicted: " .. agent:getCurrentAction());
+	GameWorld.processAgent(agent);
+	GameUtil.print2Console("recorded: " .. records[recordIndex]:getCurrentAction() .. "\tpredicted: " .. agent:getCurrentAction());
 	if records[recordIndex]:getCurrentAction() == agent:getCurrentAction() then
 		accuracy=accuracy + 1;
 	end
