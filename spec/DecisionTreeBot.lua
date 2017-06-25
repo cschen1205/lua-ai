@@ -17,8 +17,8 @@ function Bot.initialize(agent)
 end
 
 function Bot.createDecisionTree(scriptClassPath)	
-	local decisionTreeFactory=dofile(scriptClassPath .. "/DecisionTree.lua");
-	local attributeFactory=dofile(scriptClassPath .. "/Attribute.lua");
+	local decisionTreeFactory=require("DecisionTree");
+	local attributeFactory=require("Attribute");
 	
 	local classAttribute=attributeFactory.create("my action");
 	classAttribute:addValue(GameAgentAction.ATTACK);
@@ -80,7 +80,7 @@ function Bot.train(agent)
 end
 
 function Bot.createRecord(scriptClassPath, userbot)
-	local recordFactory=dofile(scriptClassPath .. "/Record.lua");
+	local recordFactory=require("Record");
 	local record=recordFactory.create();
 	
 	--class attribute

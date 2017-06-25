@@ -3,6 +3,8 @@ Bot.classifier=nil;
 Bot.records=nil;
 Bot.classAttribute=nil;
 
+local GameWorld = require("samples.GameWorld")
+
 function Bot.initialize(agent)
 	if Bot.classifier == nil then
 		Bot.classifier=Bot.createNaiveBayseClassifier(agent:getScriptClassPath());
@@ -19,18 +21,18 @@ function Bot.initialize(agent)
 end
 
 function Bot.createNaiveBayseClassifier(scriptClassPath)	
-	local nbcFactory=dofile(scriptClassPath .. "/NaiveBayseClassifier.lua");
+	local nbcFactory=require("NaiveBayesClassifier");
 	local brain=nbcFactory.create();
 	
-	local attributeFactory=dofile(scriptClassPath .. "/Attribute.lua");
+	local attributeFactory=require("Attribute");
 	Bot.classAttribute=attributeFactory.create("my action");
-	Bot.classAttribute:addValue(GameAgentAction.ATTACK);
-	Bot.classAttribute:addValue(GameAgentAction.IDLE);
-	Bot.classAttribute:addValue(GameAgentAction.APPROACH);
-	Bot.classAttribute:addValue(GameAgentAction.WANDER);
-	Bot.classAttribute:addValue(GameAgentAction.ESCAPE);
+	Bot.classAttribute:addValue(GameWorld.GameAgentAction.ATTACK);
+	Bot.classAttribute:addValue(GameWorld.GameAgentAction.IDLE);
+	Bot.classAttribute:addValue(GameWorld.GameAgentAction.APPROACH);
+	Bot.classAttribute:addValue(GameWorld.GameAgentAction.WANDER);
+	Bot.classAttribute:addValue(GameWorld.GameAgentAction.ESCAPE);
 	
-	local data=dofile("data.lua");
+	local data = require("samples.data");
 	
 	--build records
 	Bot.records={};
@@ -46,7 +48,7 @@ function Bot.train(agent)
 end
 
 function Bot.createRecord(scriptClassPath, entity)
-	local recordFactory=dofile(scriptClassPath .. "/Record.lua");
+	local recordFactory=require("Record");
 	local record=recordFactory.create();
 	
 	record:setAttribute("my action", entity:getCurrentAction());
@@ -146,15 +148,15 @@ function Bot.think(agent)
 	
 	local action=brain:predict(record, Bot.records, Bot.classAttribute);
 	
-	if action==GameAgentAction.ATTACK then
+	if action==GameWorld.GameAgentAction.ATTACK then
 		agent:attack();
-	elseif action==GameAgentAction.APPROACH then
+	elseif action==GameWorld.GameAgentAction.APPROACH then
 		agent:approach();
-	elseif action==GameAgentAction.ESCAPE then
+	elseif action==GameWorld.GameAgentAction.ESCAPE then
 		agent:escape();
-	elseif action==GameAgentAction.WANDER then
+	elseif action==GameWorld.GameAgentAction.WANDER then
 		agent:wander();
-	elseif action==GameAgentAction.IDLE then
+	elseif action==GameWorld.GameAgentAction.IDLE then
 		agent:idle();
 	end
 end

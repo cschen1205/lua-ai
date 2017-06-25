@@ -1,6 +1,6 @@
 dofile("GameUtil.lua");
 dofile("GameWorld.lua");
-GameAgentFactory=dofile("GameAgent.lua");
+GameAgentFactory=require("GameAgent");
 
 --train to obtain Saved.lua file;
 local agent=GameAgentFactory.create("UserBot");

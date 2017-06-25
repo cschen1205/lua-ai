@@ -1,7 +1,7 @@
 --Year: 2009 Month:10 Day: 22 Hour: 16 Minute: 45 Second: 55
 local userbot={};
 local recordIndex=0;
-local GameAgentFactory=dofile(getDefaultScriptPath() .. "/GameAgent.lua");
+local GameAgentFactory=require("samples.GameAgent");
 
 --recordIndex: 1
 recordIndex=recordIndex+1;

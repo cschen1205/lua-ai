@@ -1,5 +1,7 @@
 local GameAgent = {};
 GameAgent.__index = GameAgent;
+local GameWorld = require("samples.GameWorld")
+local GameUtil = require("samples.GameUtil")
 
 function GameAgent.create(agentId)
    local agnt = {};             -- our new object
@@ -15,7 +17,7 @@ function GameAgent.create(agentId)
    agnt.score=0;
    agnt.armor=0;
    agnt.firingDelay=10;
-   local GameWeaponFactory=require("GameWeapon");
+   local GameWeaponFactory=require("samples.GameWeapon");
    agnt.gun=GameWeaponFactory.create();
    
    agnt.currentTarget=nil;
@@ -27,8 +29,8 @@ function GameAgent.create(agentId)
    
    agnt.enemyScriptIds=nil;
    agnt.rotationSpeed=0;
-   agnt.currentAction=GameAgentAction.IDLE;   
-   agnt.currentTargetChoice=GameAgentTargetChoice.DEFAULT_ENEMY;
+   agnt.currentAction=GameWorld.GameAgentAction.IDLE;   
+   agnt.currentTargetChoice=GameWorld.GameAgentTargetChoice.DEFAULT_ENEMY;
    agnt.attackingTarget=nil;
    agnt.attackables=nil;
    agnt.targetAttackable=0;
@@ -211,60 +213,60 @@ function GameAgent:getCurrentAction()
 end
 
 function GameAgent:attack()
-	self:setCurrentAction(GameAgentAction.ATTACK);
+	self:setCurrentAction(GameWorld.GameAgentAction.ATTACK);
 	local targetName="unknown";
 	if self:getCurrentTarget() ~= nil then
 		targetName=self.currentTarget.getName();
 	end
-	print2Console(self:getName() .. " attack " .. targetName);
+	GameUtil.print2Console(self:getName() .. " attack " .. targetName);
 end
 
 function GameAgent:escape()
-	self:setCurrentAction(GameAgentAction.ESCAPE);
+	self:setCurrentAction(GameWorld.GameAgentAction.ESCAPE);
 	local targetName="unknown";
 	if self:getCurrentTarget() ~= nil then
 		targetName=self.currentTarget.getName();
 	end
-	print2Console(self:getName() .. " escape from " .. targetName);
+	GameUtil.print2Console(self:getName() .. " escape from " .. targetName);
 end
 
 function GameAgent:idle()
-	self:setCurrentAction(GameAgentAction.IDLE);
-	print2Console(self:getName() .. " idle");
+	self:setCurrentAction(GameWorld.GameAgentAction.IDLE);
+	GameUtil.print2Console(self:getName() .. " idle");
 end
 
 function GameAgent:approach()
-	self:setCurrentAction(GameAgentAction.APPROACH);
+	self:setCurrentAction(GameWorld.GameAgentAction.APPROACH);
 	local targetName="unknown";
 	if self:getCurrentTarget() ~= nil then
 		targetName=self.currentTarget.getName();
 	end
-	print2Console(self:getName() .. " approach " .. targetName);
+	GameUtil.print2Console(self:getName() .. " approach " .. targetName);
 end
 
 function GameAgent:wander()
-	self:setCurrentAction(GameAgentAction.WANDER);
-	print2Console(self:getName() .. " wander");
+	self:setCurrentAction(GameWorld.GameAgentAction.WANDER);
+	GameUtil.print2Console(self:getName() .. " wander");
 end
 
 function GameAgent:die()
-	self:setCurrentAction(GameAgentAction.DIE);
-	print2Console(self:getName() .. " die");
+	self:setCurrentAction(GameWorld.GameAgentAction.DIE);
+	GameUtil.print2Console(self:getName() .. " die");
 end
 
 function GameAgent:walk()
-	self:setCurrentAction(GameAgentAction.WALK);
-	print2Console(self:getName() .. " walk");
+	self:setCurrentAction(GameWorld.GameAgentAction.WALK);
+	GameUtil.print2Console(self:getName() .. " walk");
 end
 
 function GameAgent:slump()
-	self:setCurrentAction(GameAgentAction.SLUMP);
-	print2Console(self:getName() .. " slump");
+	self:setCurrentAction(GameWorld.GameAgentAction.SLUMP);
+	GameUtil.print2Console(self:getName() .. " slump");
 end
 
 function GameAgent:shoot()
-	self:setCurrentAction(GameAgentAction.SHOOT);
-	print2Console(self:getName() .. " shoot");
+	self:setCurrentAction(GameWorld.GameAgentAction.SHOOT);
+	GameUtil.print2Console(self:getName() .. " shoot");
 end
 
 function GameAgent:addEnemy(enemyScriptId)
@@ -286,23 +288,23 @@ function GameAgent:getDistance(agent)
 end
 
 function GameAgent:targetClosest()
-	self:setTargetChoice(GameAgentTargetChoice.CLOSEST_ENEMY);
+	self:setTargetChoice(GameWorld.GameAgentTargetChoice.CLOSEST_ENEMY);
 end
 
 function GameAgent:targetStrongest()
-	self:setTargetChoice(GameAgentTargetChoice.STRONGEST_ENEMY);
+	self:setTargetChoice(GameWorld.GameAgentTargetChoice.STRONGEST_ENEMY);
 end
 
 function GameAgent:targetWeakest()
-	self:setTargetChoice(GameAgentTargetChoice.WEAKEST_ENEMY);
+	self:setTargetChoice(GameWorld.GameAgentTargetChoice.WEAKEST_ENEMY);
 end
 
 function GameAgent:targetRandom()
-	self:setTargetChoice(GameAgentTargetChoice.RANDOM_ENEMY);
+	self:setTargetChoice(GameWorld.GameAgentTargetChoice.RANDOM_ENEMY);
 end
 
 function GameAgent:targetAttacker()
-	self:setTargetChoice(GameAgentTargetChoice.ATTACKER_ENEMY);
+	self:setTargetChoice(GameWorld.GameAgentTargetChoice.ATTACKER_ENEMY);
 end
 
 function GameAgent:setArmor(armor)
@@ -322,7 +324,7 @@ function GameAgent:getFiringDelay()
 end
 
 function GameAgent:doNothing()
-	print2Console(self:getName() .. " do nothing");
+	GameUtil.print2Console(self:getName() .. " do nothing");
 end
 			
 function GameAgent:isAttacking(agent)

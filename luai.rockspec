@@ -20,6 +20,19 @@ build = {
    type = "builtin",
    modules = {
       -- Note the required Lua syntax when listing submodules as keys
-      ["data.stack"] = "src/data/stack.lua",
+      ["DecisionTree"] = "src/DecisionTree.lua",
+      ["Attribute"] = "src/Attribute.lua",
+      ["Logger"] = "src/Logger.lua",
+      ["MLP"] = "src/MLP.lua",
+      ["NaiveBayesClassifier"] = "src/NaiveBayesClassifier.lua",
+      ["Record"] = "src/Record.lua",
+      ["TreeNode"] = "src/TreeNode.lua",
+      ["samples.GameUtil"] = "src/samples/GameUtil.lua",
+      ["samples.GameWorld"] = "src/samples/GameWorld.lua",
+      ["samples.GameAgent"] = "src/samples/GameAgent.lua",
+      ["samples.GameWeapon"] = "src/samples/GameWeapon.lua",
+      ["samples.NBCBot"] = "src/samples/NBCBot.lua",
+      ["samples.data"] = "src/samples/data.lua",
+
    }
 }
