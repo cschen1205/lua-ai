@@ -1,9 +1,31 @@
 # lua-ai
 Implementation of machine learning and artificial intelligence algorithms in lua
 
+# Install
+
+```bash
+luarocks install luai
+```
+
+# Features
+
+* Artificial Neural Network with Back-propagation for training
+* Decision tree
+* Naive Bayes Classifier
+
 # Usage
 
-### Multi-Layer Perceptron Neural Network
+The implementation of the machine learning algorithms can be found in the following lua files:
+
+* src/MLP.lua
+* src/NaiveBayesClassifier.lua
+* src/DecisionTree.lua
+
+The src/samples folder contains these algorithms wrapped around the GameAgent obj to show how they can be
+used to build an intelligent game bot. The actual usage can be found in the spec folder which contains their
+unit testing codes.
+
+### Multi-Layer Perceptron Neural Network Sample Codes
 
 The sample code on how to use the MLP to build a intelligent game bot can be found in the "src/samples/MLPBot.lua"
 

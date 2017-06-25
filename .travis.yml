@@ -21,7 +21,7 @@ install:
   - luarocks install lua-path
 
 script:
-  - luacheck --no-unused-args --std max+busted spec
+  - luacheck --no-unused-args --std busted spec
   - busted --verbose --coverage
 
 after_success:

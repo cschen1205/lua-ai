@@ -7,7 +7,6 @@ function LogFile.create(_filename)
 end
 
 function LogFile.println(line)
-	print(LogFile.filename)
 	if LogFile.handle == nil then
 		LogFile.handle=io.open(LogFile.filename, "w")
 	end
