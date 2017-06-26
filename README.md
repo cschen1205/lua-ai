@@ -33,17 +33,17 @@ After the bot is built, it can then be trained to understand player'action and t
 
 
 ```lua
-local GameUtil = require("samples.GameUtil")
-local GameWorld = require("samples.GameWorld")
-local GameAgentFactory=require("samples.GameAgent")
+local GameUtil = require("luai.samples.GameUtil")
+local GameWorld = require("luai.samples.GameWorld")
+local GameAgentFactory=require("luai.samples.GameAgent")
 
 --train to obtain MLP model file
 local agent=GameAgentFactory.create("UserBot")
-GameWorld.initializeAgent(agent, "samples.MLPBot")
+GameWorld.initializeAgent(agent, "luai.samples.MLPBot")
 GameWorld.trainAgent(agent)
 
 --test accuracy of the training
-local records=require("samples.data")
+local records=require("luai.samples.data")
 
 local accuracy=0
 for recordIndex = 1, (# records) do
