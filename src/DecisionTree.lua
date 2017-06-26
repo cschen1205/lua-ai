@@ -6,7 +6,7 @@ function DecisionTree.create(scriptPath, _cls)
 	setmetatable(tree, DecisionTree)
 	
 	tree.scriptPath=scriptPath
-	local treeNodeFactory=dofile(scriptPath .. "/TreeNode.lua")
+	local treeNodeFactory=require("TreeNode")
 	tree.root=treeNodeFactory.create(_cls)
 	tree.trained=false
 	
@@ -55,7 +55,7 @@ function DecisionTree:toString()
 end
 
 function DecisionTree:printXML(fileName)
-	local logger=dofile(self.scriptPath .. "/Logger.lua")
+	local logger=require("Logger")
 	logger.create(fileName)
 	logger.println("<?xml version=\"1.0\"?>")
 	self.root:toXML(logger)
@@ -63,7 +63,7 @@ function DecisionTree:printXML(fileName)
 end
 
 function DecisionTree:printPredictionTrace(record, fileName)
-	local logger=dofile(self.scriptPath .. "/Logger.lua")
+	local logger=require("Logger.lua")
 	logger.create(fileName)
 	logger.println("<?xml version=\"1.0\"?>")
 	self.root:printPredictionTrace(record, logger)

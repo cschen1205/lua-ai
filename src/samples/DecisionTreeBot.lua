@@ -1,6 +1,7 @@
 local Bot={}
 Bot.C45=nil
 
+
 function Bot.initialize(agent)
 	if Bot.C45 == nil then
 		Bot.C45=Bot.createDecisionTree(agent:getScriptClassPath())
@@ -19,13 +20,14 @@ end
 function Bot.createDecisionTree(scriptClassPath)	
 	local decisionTreeFactory=require("DecisionTree")
 	local attributeFactory=require("Attribute")
+	local GameWorld = require("samples.GameWorld")
 	
 	local classAttribute=attributeFactory.create("my action")
-	classAttribute:addValue(GameAgentAction.ATTACK)
-	classAttribute:addValue(GameAgentAction.IDLE)
-	classAttribute:addValue(GameAgentAction.APPROACH)
-	classAttribute:addValue(GameAgentAction.WANDER)
-	classAttribute:addValue(GameAgentAction.ESCAPE)
+	classAttribute:addValue(GameWorld.GameAgentAction.ATTACK)
+	classAttribute:addValue(GameWorld.GameAgentAction.IDLE)
+	classAttribute:addValue(GameWorld.GameAgentAction.APPROACH)
+	classAttribute:addValue(GameWorld.GameAgentAction.WANDER)
+	classAttribute:addValue(GameWorld.GameAgentAction.ESCAPE)
 	
 	local brain=decisionTreeFactory.create(scriptClassPath, classAttribute)
 	local attribute=attributeFactory.create("is my target attackable")
@@ -61,11 +63,12 @@ function Bot.train(agent)
 	local agentId=agent:getAgentId()
 	local scriptClassPath=agent:getScriptClassPath()
 	local brain=Bot[agentId].brain
+	local GameUtil = require("samples.GameUtil")
 	
 	if brain:isTrained() then
 		alert("C45 has already been trained", "Training Completed")
 	else
-		local data=dofile("data.lua")
+		local data=require("samples.data")
 	
 		--build C45
 		local records={}
@@ -74,8 +77,8 @@ function Bot.train(agent)
 		end
 		brain:build(records)
 		
-		brain:printXML("test-results/decision-tree-saved.xml")
-		alert("Training Completed with Saved.xml generated for C45 ", "Training Completed")
+		brain:printXML("/tmp/decision-tree-saved.xml")
+		GameUtil.alert("Training Completed with Saved.xml generated for C45 ", "Training Completed")
 	end
 end
 
@@ -125,6 +128,7 @@ function Bot.createRecord(scriptClassPath, userbot)
 end
 
 function Bot.think(agent)
+	local GameWorld = require("samples.GameWorld")
 	local agentId=agent:getAgentId()
 	local brain=Bot[agentId].brain
 	--apply inputs to the neural network
@@ -134,15 +138,15 @@ function Bot.think(agent)
 	local action=brain:predict(record)
 	--brain:printPredictionTrace(record, agent:getScriptClassPath() .. "/" .. os.date("%H%M%S") .. ".xml")
 	
-	if action==GameAgentAction.ATTACK then
+	if action==GameWorld.GameAgentAction.ATTACK then
 		agent:attack()
-	elseif action==GameAgentAction.APPROACH then
+	elseif action==GameWorld.GameAgentAction.APPROACH then
 		agent:approach()
-	elseif action==GameAgentAction.ESCAPE then
+	elseif action==GameWorld.GameAgentAction.ESCAPE then
 		agent:escape()
-	elseif action==GameAgentAction.WANDER then
+	elseif action==GameWorld.GameAgentAction.WANDER then
 		agent:wander()
-	elseif action==GameAgentAction.IDLE then
+	elseif action==GameWorld.GameAgentAction.IDLE then
 		agent:idle()
 	end
 end
